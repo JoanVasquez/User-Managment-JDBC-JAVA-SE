@@ -10,5 +10,6 @@ If this code helped to save time in your project, please donate for a coffee...
 <h2>DEMONSTRATION</h2>
 <br>
 <br>
-<p>Click on the image</p>
+<a href="https://www.youtube.com/watch?v=wr6v_qazMXo">Click</a>
+
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/wr6v_qazMXo/0.jpg)](https://www.youtube.com/watch?v=wr6v_qazMXo)
