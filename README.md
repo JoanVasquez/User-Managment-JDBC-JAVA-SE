@@ -6,11 +6,9 @@ If this code helped to save time in your project, please donate for a coffee...
 
 
 
-{::nomarkdown}
 
 <h2>DEMONSTRATION</h2>
 <br>
 <br>
 
-{:/}
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/wr6v_qazMXo/0.jpg)](https://www.youtube.com/watch?v=wr6v_qazMXo)
