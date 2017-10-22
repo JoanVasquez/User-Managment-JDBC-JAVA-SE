@@ -25,6 +25,8 @@ public class Desktop extends JFrame{
 	private JDesktopPane container;
 
 	private UserView userView;
+	
+	public boolean isTest = false;
 
 	public Desktop() {
 		super("Desktop User Managment...");
@@ -36,7 +38,7 @@ public class Desktop extends JFrame{
 		this.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent we) {
-				DBConnection.closeConnection();
+				if(!isTest) DBConnection.closeConnection();
 			}
 		});
 	}
