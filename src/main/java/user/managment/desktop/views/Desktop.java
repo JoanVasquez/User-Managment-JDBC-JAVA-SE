@@ -26,7 +26,7 @@ public class Desktop extends JFrame{
 
 	private UserView userView;
 	
-	public boolean isTest = false;
+	public static boolean isTest = false;
 
 	public Desktop() {
 		super("Desktop User Managment...");
