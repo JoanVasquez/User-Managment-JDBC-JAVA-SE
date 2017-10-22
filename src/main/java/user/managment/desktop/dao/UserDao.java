@@ -12,6 +12,7 @@ import user.managment.desktop.db.DBConnectionProperties;
 import user.managment.desktop.model.User;
 import user.managment.desktop.query.Queries;
 import user.managment.desktop.security.AES256;
+import user.managment.desktop.views.Desktop;
 
 //DAO CLASS - IMPLEMENT CRUD INTERFACE
 public class UserDao extends Queries implements Crud<User> {
@@ -23,12 +24,20 @@ public class UserDao extends Queries implements Crud<User> {
 
 	// CONSTRUCTOR
 	public UserDao() {
-		dbConnectionProperties = new DBConnectionProperties();
-		dbConnectionProperties.setDriver("com.mysql.jdbc.Driver");// THE DRIVER - MYSQL IN THIS CASE
-		dbConnectionProperties.setUrl("jdbc:mysql://localhost:3306/userprocesses");// DATABASE URL
-		dbConnectionProperties.setUser("root");// DATABASE USER
-		dbConnectionProperties.setPassword("pass22");// DATABASE PASSWORD
-		dbConnection = DBConnection.openConnection(dbConnectionProperties);
+		if (Desktop.isTest) {
+			dbConnectionProperties = new DBConnectionProperties();
+			dbConnectionProperties.setDriver("com.mysql.jdbc.Driver");// THE DRIVER - MYSQL IN THIS CASE
+			dbConnectionProperties.setUser("root");// DATABASE USER
+			dbConnectionProperties.setPassword("pass");// DATABASE PASSWORD
+			dbConnection = DBConnection.openConnection(dbConnectionProperties);
+		} else {
+			dbConnectionProperties = new DBConnectionProperties();
+			dbConnectionProperties.setDriver("com.mysql.jdbc.Driver");// THE DRIVER - MYSQL IN THIS CASE
+			dbConnectionProperties.setUrl("jdbc:mysql://localhost:3306/userprocesses");// DATABASE URL
+			dbConnectionProperties.setUser("root");// DATABASE USER
+			dbConnectionProperties.setPassword("pass");// DATABASE PASSWORD
+			dbConnection = DBConnection.openConnection(dbConnectionProperties);
+		}
 	}
 
 	// DELETE USER
@@ -60,7 +69,7 @@ public class UserDao extends Queries implements Crud<User> {
 					resultSet.getString(4), resultSet.getBytes(5), AES256.decryption(resultSet.getString(5)));
 			listUser.add(user);
 		}
-		
+
 		resultSet.close();
 		prepareStatement.close();
 
@@ -77,14 +86,12 @@ public class UserDao extends Queries implements Crud<User> {
 		prepareStatement.setString(3, e.getEmail());
 		prepareStatement.setBytes(4, e.getPassword());
 
-		if (prepareStatement.executeUpdate() > 0) {
-			resultSet = prepareStatement.getGeneratedKeys();
-			if(resultSet.next()) {
-				userId = resultSet.getInt(1);
-				e.setIdUser(userId);
-			}
-		} else
-			e = null;
+		prepareStatement.executeUpdate();
+		resultSet = prepareStatement.getGeneratedKeys();
+		if (resultSet.next()) {
+			userId = resultSet.getInt(1);
+			e.setIdUser(userId);
+		}
 
 		resultSet.close();
 		prepareStatement.close();
